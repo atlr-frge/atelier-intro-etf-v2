@@ -175,10 +175,13 @@ section .inner {
 .hero::before {
   content: '';
   position: absolute;
-  top: -120px; right: -80px;
-  width: 600px; height: 600px;
-  background: radial-gradient(ellipse, var(--gold-dim) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  width: 550px; height: 550px;
+  background:
+    radial-gradient(ellipse at 40% 40%, rgba(184,134,11,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at 60% 70%, rgba(12,31,63,0.06) 0%, transparent 55%);
   pointer-events: none;
+  filter: blur(30px);
 }
 .hero-inner {
   max-width: var(--max-w);
@@ -612,48 +615,81 @@ section .inner {
 }
 
 /* ==============================================
-   SECTION IMAGES
+   HEADSHOTS
    ============================================== */
-.section-img {
-  width: 100%;
-  border-radius: 14px;
-  display: block;
+.bio-headshot {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
   object-fit: cover;
-  aspect-ratio: 1 / 1;
+  border: 2px solid var(--border-light);
+  box-shadow: 0 4px 12px rgba(12,31,63,0.08);
+  flex-shrink: 0;
 }
-.section-img.wide {
-  aspect-ratio: 16 / 9;
-  max-width: 100%;
-}
-.img-frame {
-  position: relative;
-  border-radius: 14px;
+.bio-card-with-photo {
+  display: flex;
   overflow: hidden;
-  box-shadow: 0 12px 40px rgba(12,31,63,0.10);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
 }
-.img-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  border: 1px solid rgba(12,31,63,0.06);
-  pointer-events: none;
+.bio-card-with-photo .bio-accent {
+  width: 4px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.bio-card-with-photo .bio-content {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: 1.4rem 1.6rem;
+  flex: 1;
+}
+.bio-card-with-photo .bio-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.bio-card-with-photo .bio-role {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.25rem;
+}
+.bio-card-with-photo .bio-text {
+  font-size: 0.88rem;
+  color: var(--text-sec);
+  line-height: 1.65;
+  margin-top: 0.75rem;
+  text-wrap: pretty;
 }
 
-/* Full-width image band */
-.img-band {
-  width: 100%;
-  max-width: var(--max-w);
-  margin: 2.5rem auto 0;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 12px 40px rgba(12,31,63,0.10);
+/* ==============================================
+   CSS ABSTRACT VISUALS — on-brand gold/navy
+   ============================================== */
+.hero-abstract {
+  position: absolute;
+  top: -60px; right: -120px;
+  width: 500px; height: 500px;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(184,134,11,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(12,31,63,0.05) 0%, transparent 50%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
 }
-.img-band img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  aspect-ratio: 21 / 9;
+.section-accent-dots {
+  position: absolute;
+  top: 3rem; right: var(--pad-x);
+  width: 120px; height: 120px;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* ==============================================
@@ -807,9 +843,6 @@ section .inner {
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Context Engineering</div><div class="card-desc">Your regulatory docs, process maps, and institutional knowledge loaded into every operation. The system works with your actual domain, not a generic baseline.</div></div></div>
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Production Integrations</div><div class="card-desc">Direct connections to your real tools. Salesforce, SAP, internal databases, legacy systems. Your actual stack, not a demo environment.</div></div></div>
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Swarm Orchestration</div><div class="card-desc">Multiple agents working together. One reviews, another builds, a third validates. Coordinated teams of systems, not a single chatbot.</div></div></div>
-      <div class="img-frame reveal" style="margin-top:14px">
-        <img src="images/context.jpg" alt="Layered glass and copper structures representing deep context engineering" class="section-img" width="800" height="800" loading="lazy">
-      </div>
     </div>
   </div>
 </section>
@@ -827,9 +860,6 @@ section .inner {
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Intent Engineering</div><div class="card-desc">We encode the business goal, not the task. The system knows what success means in your context and works toward&nbsp;it.</div></div></div>
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Self-Correcting Judgment</div><div class="card-desc">It knows when it doesn&rsquo;t know. Flags low confidence, asks for input, and escalates before making a costly&nbsp;mistake.</div></div></div>
       <div class="card-item"><div class="accent"></div><div class="c-inner"><div class="card-title">Adaptive Execution</div><div class="card-desc">New data mid-run. Conditions shift. The system recalibrates in real time. Informed judgment, not rigid&nbsp;scripts.</div></div></div>
-      <div class="img-frame reveal" style="margin-top:14px">
-        <img src="images/swarm.jpg" alt="Particle swarm forming an emergent shape — representing adaptive intelligence" class="section-img" width="800" height="800" loading="lazy">
-      </div>
     </div>
   </div>
 </section>
@@ -844,9 +874,6 @@ section .inner {
       <div class="stat-card"><div class="val">5 &rarr; 50</div><div class="stat-label">Effective Headcount</div><div class="stat-desc">Same team. Radically different output.</div></div>
       <div class="stat-card"><div class="val">24/7</div><div class="stat-label">Always Running</div><div class="stat-desc">The system works nights, weekends, and holidays.</div></div>
       <div class="stat-card"><div class="val">&uarr;</div><div class="stat-label">Compounding</div><div class="stat-desc">Every week it gets better at your specific problem.</div></div>
-    </div>
-    <div class="img-band reveal">
-      <img src="images/integrations.jpg" alt="Precision machinery — systems that connect and run" width="800" height="343" loading="lazy">
     </div>
   </div>
 </section>
@@ -875,15 +902,8 @@ section .inner {
 <!-- FORGE -->
 <div class="forge-section" id="method">
   <div class="forge-inner">
-    <div style="display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end">
-      <div>
-        <span class="label reveal" style="color:rgba(255,255,255,0.7)">Forge</span>
-        <h2 class="section-title reveal" style="color:#fff">What it looks like<br>to work with&nbsp;us.</h2>
-      </div>
-      <div class="reveal" style="width:180px;height:180px;border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3)">
-        <img src="images/forge.jpg" alt="" width="180" height="180" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
-      </div>
-    </div>
+    <span class="label reveal" style="color:rgba(255,255,255,0.7)">Forge</span>
+    <h2 class="section-title reveal" style="color:#fff">What it looks like<br>to work with&nbsp;us.</h2>
     <div class="forge-grid stagger-children">
       <div class="forge-card">
         <div class="num">01</div>
@@ -915,9 +935,6 @@ section .inner {
   <div class="inner">
     <span class="label reveal">We Can Prove It</span>
     <h2 class="section-title reveal">Working systems. <em>Real&nbsp;industries.</em></h2>
-    <div class="img-band reveal" style="margin-bottom:1rem">
-      <img src="images/compound.jpg" alt="Compounding growth spiral — small elements building into something large" width="800" height="343" loading="lazy">
-    </div>
     <div class="grid-2x2 stagger-children">
       <div class="case-card"><span class="dot"></span><span class="case-title">Financial Services</span><p class="case-desc">Compliance operations running at the pace of the business. Agents review transactions, flag anomalies, and generate regulator-ready reports. We can show you this&nbsp;running.</p><p class="case-tag">Your regulatory landscape +&nbsp;risk&nbsp;profile</p></div>
       <div class="case-card"><span class="dot"></span><span class="case-title">Advertising &amp;&nbsp;Creative</span><p class="case-desc">Pipeline orchestration across broadcast, VFX, and post-production. Agents coordinating work that used to need a full production team. We have working&nbsp;examples.</p><p class="case-tag">Creative intent + technical&nbsp;constraints</p></div>
@@ -940,8 +957,8 @@ section .inner {
       </div>
     </div>
     <div class="bio-stack stagger-children">
-      <div class="bio-card"><div class="bio-accent"></div><div class="bio-inner"><div class="bio-name">Sean Evans</div><div class="bio-role">Co-Founder &amp; CTO</div><div class="bio-text">28 years building production systems across broadcast, animation, VR, and immersive media. Co-founded Occupied VR, 1188 Films, and Holy City VR. Executive produced No Dress Rehearsal for Amazon Prime (7 Canadian Screen Award nominations). Built generative and XR pipelines for the Design Exchange Toronto. SIGGRAPH presenter. CTO at EVOQ.</div></div></div>
-      <div class="bio-card"><div class="bio-accent"></div><div class="bio-inner"><div class="bio-name">Michael Chase</div><div class="bio-role">Co-Founder &amp; CEO</div><div class="bio-text">30 years at the edge of emerging technology. Built and exited 7 companies including TRAVAI (acquired by Kognitiv). Ran Deloitte&rsquo;s Novel &amp; Exponential Tech group, turning proofs of concept into enterprise deployments. CSO at Kognitiv, scaling AI-driven commerce across $500M in enterprise value. Google, BMW, Thomson Reuters, Nike. Forbes Top 100 CMO. MIT.</div></div></div>
+      <div class="bio-card-with-photo"><div class="bio-accent"></div><div class="bio-content"><img src="images/sean-evans.jpg" alt="Sean Evans" class="bio-headshot" width="72" height="72" loading="lazy"><div><div class="bio-name">Sean Evans</div><div class="bio-role">Co-Founder &amp; CTO</div><div class="bio-text">28 years building production systems across broadcast, animation, VR, and immersive media. Co-founded Occupied VR, 1188 Films, and Holy City VR. Executive produced No Dress Rehearsal for Amazon Prime (7 Canadian Screen Award nominations). Built generative and XR pipelines for the Design Exchange Toronto. SIGGRAPH presenter. CTO at&nbsp;EVOQ.</div></div></div></div>
+      <div class="bio-card-with-photo"><div class="bio-accent"></div><div class="bio-content"><img src="images/michael-chase.jpg" alt="Michael Chase" class="bio-headshot" width="72" height="72" loading="lazy"><div><div class="bio-name">Michael Chase</div><div class="bio-role">Co-Founder &amp; CEO</div><div class="bio-text">30 years at the edge of emerging technology. Built and exited 7 companies including TRAVAI (acquired by Kognitiv). Ran Deloitte&rsquo;s Novel &amp; Exponential Tech group, turning proofs of concept into enterprise deployments. CSO at Kognitiv, scaling AI-driven commerce across $500M in enterprise value. Google, BMW, Thomson Reuters, Nike. Forbes Top 100 CMO.&nbsp;MIT.</div></div></div></div>
     </div>
   </div>
 </section>
